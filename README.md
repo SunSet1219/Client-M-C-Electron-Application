@@ -1,1 +1,4 @@
-# Client-M-C-Electron-Application
+# Electron
+-Install.<br>
+	$ npm install<br>
+	$ npm start<br>
