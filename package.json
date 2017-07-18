@@ -1,20 +1,16 @@
 {
-  "name": "hunchly",
+  "name": "Artik",
   "version": "0.1.0",
   "description": "",
   "main": "main.js",
   "scripts": {
-    "start": "electron .",
-    "rebuild": "electron-rebuild -f -w sqlite3"
+    "start": "electron ."   
   },
-  "author": "Egor P",
+  "author": "Sunshine1219",
   "license": "ISC",
   "dependencies": {
     "electron": "^1.6.7",
-    "jquery": "^3.2.1",
-    "sequelize": "^3.30.4",
-    "sql.js": "^0.4.0",
-    "sqlite3": "^3.1.8",
+    "jquery": "^3.2.1", 
     "ws": "^3.0.0"
   },
   "devDependencies": {
