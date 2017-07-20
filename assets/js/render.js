@@ -94,9 +94,9 @@ $.ajax({
       $('.device-list').append('<div class="list-all"><div class="div-item1"><span id="device-name">'+response.data.devices[i].name+'</span>&nbsp;&nbsp;<span id="state'+i+'">Missing</span><img id="img'+i+'" src="./assets/img/disconnect.png" width="25" height="25" style="float:right"/></div>'+
                                                     '<div class="div-item2"><div class="col-md-6"><span>Brightness</span>'+
                                                             '<input type="input" name="brightness" value="0" id="brgt'+i+'"/>'+
-                                                        '</div><div class="col-md-6"><button type="button" class="btn btn-primary" style="float:right" onclick="action('+i+')">Action</button><p><span>UBATT&nbsp;</span><span id="ubatt'+i+'">0</span> mVolt</p>'+
-                                                            '<p><span>TBATT&nbsp;</span><span id="tbatt'+i+'">0</span> Celsius</p>'+
-                                                            '<p><span>BATTSTAT&nbsp;</span><span id="battstat'+i+'">0</span> %</p>'+
+                                                        '</div><div class="col-md-6"><button type="button" class="btn btn-primary" style="float:right" onclick="action('+i+')">Action</button><p><span>UBATT:&nbsp;</span><span id="ubatt'+i+'">0</span> mVolt</p>'+
+                                                            '<p><span>TBATT:&nbsp;</span><span id="tbatt'+i+'">0</span> Celsius</p>'+
+                                                            '<p><span>BATTSTAT:&nbsp;</span><span id="battstat'+i+'">0</span> %</p>'+
                                                         '</div></div></div>');
               deviceID[i]=response.data.devices[i].id;
               console.log("deviceID====>",deviceID[i]);
