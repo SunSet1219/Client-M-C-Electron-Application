@@ -824,6 +824,13 @@ button.close1 {
     
 
 }
+.div-item2 div div img{
+        cursor: pointer;
+}
+.div-item2 div div img:hover{
+    opacity: 0.5;
+}
+
 .list-all{
     margin-left: 10px;
     box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.15);

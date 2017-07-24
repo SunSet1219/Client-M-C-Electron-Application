@@ -8,6 +8,7 @@ var ConfigWSParameters = {
 var deviceID=[];
 var WebSocket = require("ws");
 
+var config = JSON.parse(url).dst;
 var ConfigWSConnection = {
 
     "scheme": "wss",
@@ -93,7 +94,7 @@ $.ajax({
       console.log(response.data.devices[i].name);
       $('.device-list').append('<div class="list-all"><div class="div-item1"><span id="device-name">'+response.data.devices[i].name+'</span>&nbsp;&nbsp;<span id="state'+i+'">Missing</span><img id="img'+i+'" src="./assets/img/disconnect.png" width="25" height="25" style="float:right"/></div>'+
                                                     '<div class="div-item2"><div class="col-md-6"><span>Brightness</span>'+
-                                                            '<input type="input" name="brightness" value="0" id="brgt'+i+'"/>'+
+                                                            '<input type="input" name="brightness" value="0" id="brgt'+i+'"/><div><img src="./assets/img/play.png" onclick="play('+i+')" id="play'+i+'"/> <img id="pause'+i+'" src="./assets/img/pause.png" onclick="pause('+i+')" style="display:none"><img id="refresh'+i+'" onclick="refresh('+i+')" src="./assets/img/refresh.png" width="40" height="40" onclick="refresh('+i+')" style="display:none"></div>'+
                                                         '</div><div class="col-md-6"><button type="button" class="btn btn-primary" style="float:right" onclick="action('+i+')">Action</button><p><span>UBATT:&nbsp;</span><span id="ubatt'+i+'">0</span> mVolt</p>'+
                                                             '<p><span>TBATT:&nbsp;</span><span id="tbatt'+i+'">0</span> Celsius</p>'+
                                                             '<p><span>BATTSTAT:&nbsp;</span><span id="battstat'+i+'">0</span> %</p>'+
@@ -143,6 +144,130 @@ function action(val){
   });
 }
 
+
+function play(val){
+  
+
+  $("#play"+val).css("display","none");
+  $("#pause"+val).css("display","initial");
+  $("#refresh"+val).css("display","initial");
+  $.ajax({
+                      url:'https://api.artik.cloud/v1.1/actions',
+                      type:'POST',
+                      headers : {
+                              
+                              'Authorization' :'Bearer e402964e60b044b681115408c58b50b1'
+                              
+                              },
+                      contentType : 'application/json',
+                      data : JSON.stringify(
+                                  {
+                                          "data": {
+                                              "actions": [
+                                                  {
+                                                      "name": "setVTARGET",
+                                                      "parameters": {
+                                                          "vtarget":config
+                                                      }
+                                                  }
+                                              ]
+                                          },
+                                          "ddid": deviceID[val],
+                                          "ts": new Date().getTime(),
+                                          "type": "action"
+                                      }
+                                  ),
+                      success : function(response) { 
+                        console.log(response);
+                            $("#video"+val).css("display","initial");
+                            var video = document.getElementById("video0");
+                        //var button = document.getElementById("play");
+                        if (video.paused) {
+                            video.play();
+                            
+                        } 
+                      }
+  });
+}
+function pause(val){
+  
+  $("#play"+val).css("display","initial");
+  $("#pause"+val).css("display","none");
+  $("#refresh"+val).css("display","none");
+  $.ajax({
+                      url:'https://api.artik.cloud/v1.1/actions',
+                      type:'POST',
+                      headers : {
+                              
+                              'Authorization' :'Bearer e402964e60b044b681115408c58b50b1'
+                              
+                              },
+                      contentType : 'application/json',
+                      data : JSON.stringify(
+                                  {
+                                          "data": {
+                                              "actions": [
+                                                  {
+                                                      "name": "setSVID",
+                                                      "parameters": {
+                                                          "svid":0
+                                                      }
+                                                  }
+                                              ]
+                                          },
+                                          "ddid": deviceID[val],
+                                          "ts": new Date().getTime(),
+                                          "type": "action"
+                                      }
+                                  ),
+                      success : function(response) { 
+                        console.log(response);
+                        var video = document.getElementById("video0");
+                                    //var button = document.getElementById("play");
+                                    if (!video.paused) {
+                                        video.pause();
+                                        
+                                    }
+                                }
+  });
+}
+
+function refresh(val){
+    
+  
+  $.ajax({
+                      url:'https://api.artik.cloud/v1.1/actions',
+                      type:'POST',
+                      headers : {
+                              
+                              'Authorization' :'Bearer e402964e60b044b681115408c58b50b1'
+                              
+                              },
+                      contentType : 'application/json',
+                      data : JSON.stringify(
+                                  {
+                                          "data": {
+                                              "actions": [
+                                                  {
+                                                      "name": "setSVID",
+                                                      "parameters": {
+                                                          "svid":1
+                                                      }
+                                                  }
+                                              ]
+                                          },
+                                          "ddid": deviceID[val],
+                                          "ts": new Date().getTime(),
+                                          "type": "action"
+                                      }
+                                  ),
+                      success : function(response) { 
+                        console.log(response);
+                        var video = document.getElementById("video0");
+                        video.currentTime = 0;
+                      }
+  });
+}
 
 function getConnectionParameters(config) {
 
